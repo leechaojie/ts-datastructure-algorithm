@@ -9,10 +9,10 @@ console.log = content => {
   if (typeof content === 'number') {
     content = `<span style="color: blue">${content}</span>`
   }
-  oTextareaInfo.innerHTML = oTextareaInfo.innerHTML + content + '<br/>'
+  (oTextareaInfo as HTMLElement).innerHTML = (oTextareaInfo as HTMLElement).innerHTML + content + '<br/>';
 
   // 将滚动条滚动到最底部
-  oTextareaInfo.scrollTop = oTextareaInfo.scrollHeight
+  (oTextareaInfo as HTMLElement).scrollTop = (oTextareaInfo as HTMLElement).scrollHeight
 }
 
 // import './06_数据结与算法/01-栈/stack.ts'
