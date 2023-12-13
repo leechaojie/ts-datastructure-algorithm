@@ -1,10 +1,11 @@
+import { ISetItems } from "../types";
+
 /**
  * 集合
  * 集合是由一组无序且唯一(即不能重复)的项组成的。该数据结构使用了与有限集合相同的数学概念，但应用在计算机科学的数据结构中。
  */
 export default class Set<T> {
-  // private items: ISetItems<T>
-  private items: any;
+  private items: ISetItems<T>
   constructor() {
     this.items = {};
   }
@@ -15,7 +16,7 @@ export default class Set<T> {
    */
   public add(element: T): boolean {
     if (!this.has(element)) {
-      this.items[element] = element;
+      this.items[element as string] = element;
       return true;
     }
     return false;
@@ -28,7 +29,7 @@ export default class Set<T> {
    */
   public delete(element: T): boolean {
     if (this.has(element)) {
-      delete this.items[element];
+      delete this.items[element as string];
       return true;
     }
     return false;

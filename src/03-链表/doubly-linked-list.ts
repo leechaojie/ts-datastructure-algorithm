@@ -30,7 +30,6 @@ export default class DoublyLinkedList<T> extends LinkedList<T> {
     this.count++
   }
 
-
   /**
    * 双向链表任意位置插入元素
    * @param element 插入的元素
@@ -115,6 +114,5 @@ export default class DoublyLinkedList<T> extends LinkedList<T> {
     super.clear()
     this.tail = undefined
   }
-
 
 }

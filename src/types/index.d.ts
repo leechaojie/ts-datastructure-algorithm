@@ -1,22 +1,22 @@
 /**
  * 队列/栈 元素类型
  */
-export interface IItems<T> {
+export type IItems<T> = {
   [key: number]: T;
 }
 
 /**
  * 集合
  */
-// interface ISetItems<T> {
-//   [key: T]: T
-// }
+export type ISetItems<T> = {
+  [key: string]: T
+}
 
-export interface IHotPotato<T> {
+export type IHotPotato<T> = {
   eliminated: Array<T>;
   winner: T | undefined;
 }
 
-export interface IEqualsFunction<T> {
+export type IEqualsFunction<T> = {
   (a: T, b: T): boolean;
 }

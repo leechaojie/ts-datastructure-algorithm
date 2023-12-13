@@ -137,7 +137,6 @@ console.log('peekFront', deque.peekFront())
 console.log('peekBack', deque.peekBack())
 console.log('toString', deque.toString())
 
-
 // console.log('removeFront', deque.removeFront())
 console.log('removeBack', deque.removeBack())
 console.log('size', deque.size())
