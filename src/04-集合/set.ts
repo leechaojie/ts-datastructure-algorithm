@@ -4,9 +4,9 @@
  */
 export default class Set<T> {
   // private items: ISetItems<T>
-  private items: any
+  private items: any;
   constructor() {
-    this.items = {}
+    this.items = {};
   }
 
   /**
@@ -15,10 +15,10 @@ export default class Set<T> {
    */
   public add(element: T): boolean {
     if (!this.has(element)) {
-      this.items[element] = element
-      return true
+      this.items[element] = element;
+      return true;
     }
-    return false
+    return false;
   }
 
   /**
@@ -28,24 +28,24 @@ export default class Set<T> {
    */
   public delete(element: T): boolean {
     if (this.has(element)) {
-      delete this.items[element]
-      return true
+      delete this.items[element];
+      return true;
     }
-    return false
+    return false;
   }
 
   /**
    * 移除集合中的所有元素
    */
   public clear(): void {
-    this.items = {}
+    this.items = {};
   }
 
   /**
    * 返回集合所包含元素的数量
    */
   public size(): number {
-    return Object.keys(this.items).length
+    return Object.keys(this.items).length;
   }
 
   /**
@@ -53,7 +53,7 @@ export default class Set<T> {
    * @returns
    */
   public values(): Array<T> {
-    return Object.values(this.items)
+    return Object.values(this.items);
   }
 
   /**
@@ -62,8 +62,7 @@ export default class Set<T> {
    * @returns
    */
   public has(element: T): boolean {
-    // return Object.prototype.hasOwnProperty.call(this.items, element)
-    return this.items.hasOwnProperty(element)
+    return Object.prototype.hasOwnProperty.call(this.items, element as PropertyKey)
   }
 
   /**
@@ -72,10 +71,10 @@ export default class Set<T> {
    * @returns
    */
   public union(otherSet: Set<T>): Set<T> {
-    const unionSet: Set<T> = new Set()
-    this.values().forEach(value => unionSet.add(value))
-    otherSet.values().forEach(value => unionSet.add(value))
-    return unionSet
+    const unionSet: Set<T> = new Set();
+    this.values().forEach((value) => unionSet.add(value));
+    otherSet.values().forEach((value) => unionSet.add(value));
+    return unionSet;
   }
 
   /**
@@ -84,21 +83,21 @@ export default class Set<T> {
    * @returns
    */
   public intersection(otherSet: Set<T>): Set<T> {
-    const intersectionSet: Set<T> = new Set()
-    const values = this.values()
-    const otherValues = otherSet.values()
-    let biggerSet = values
-    let smallerSet = otherValues
+    const intersectionSet: Set<T> = new Set();
+    const values = this.values();
+    const otherValues = otherSet.values();
+    let biggerSet = values;
+    let smallerSet = otherValues;
     if (otherValues.length - values.length > 0) {
-      biggerSet = otherValues
-      smallerSet = values
+      biggerSet = otherValues;
+      smallerSet = values;
     }
-    smallerSet.forEach(value => {
+    smallerSet.forEach((value) => {
       if (biggerSet.includes(value)) {
-        intersectionSet.add(value)
+        intersectionSet.add(value);
       }
-    })
-    return intersectionSet
+    });
+    return intersectionSet;
   }
 
   /**
@@ -107,13 +106,13 @@ export default class Set<T> {
    * @returns
    */
   public difference(otherSet: Set<T>): Set<T> {
-    const differenceSet: Set<T> = new Set()
-    this.values().forEach(value => {
+    const differenceSet: Set<T> = new Set();
+    this.values().forEach((value) => {
       if (!otherSet.has(value)) {
-        differenceSet.add(value)
+        differenceSet.add(value);
       }
-    })
-    return differenceSet
+    });
+    return differenceSet;
   }
 
   /**
@@ -123,15 +122,15 @@ export default class Set<T> {
    */
   public isSubsetOf(otherSet: Set<T>): boolean {
     if (this.size() > otherSet.size()) {
-      return false
+      return false;
     }
-    let isSubset = true
-    this.values().every(value => {
+    let isSubset = true;
+    this.values().every((value) => {
       if (!otherSet.has(value)) {
-        isSubset = false // 跳出循环
-        return false
+        isSubset = false; // 跳出循环
+        return false;
       }
-    })
-    return isSubset
+    });
+    return isSubset;
   }
 }

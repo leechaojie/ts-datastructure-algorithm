@@ -1,5 +1,6 @@
 import { defaultEquals } from '../utils/util'
 import { Node } from '../models/linked-list-models'
+import { IEqualsFunction } from '../types'
 
 /**
  * 链表

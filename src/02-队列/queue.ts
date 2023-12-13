@@ -1,14 +1,16 @@
+import { IItems } from '../types';
+
 /**
  * 队列
  */
 export default class Queue<T> {
-  private count: number // 队列大小
-  private items: IItems<T> // 队列的元素
-  private lowestCount: number // 追踪队列第一个元素
+  private count: number; // 队列大小
+  private items: IItems<T>; // 队列的元素
+  private lowestCount: number; // 追踪队列第一个元素
   constructor() {
-    this.count = 0
-    this.items = {}
-    this.lowestCount = 0
+    this.count = 0;
+    this.items = {};
+    this.lowestCount = 0;
   }
 
   /**
@@ -16,10 +18,9 @@ export default class Queue<T> {
    * @param element
    */
   public enqueue(element: T) {
-    this.items[this.count] = element
-    this.count++
+    this.items[this.count] = element;
+    this.count++;
   }
-
 
   /**
    * 移除队列的第一项
@@ -27,12 +28,12 @@ export default class Queue<T> {
    */
   public dequeue(): T | undefined {
     if (this.isEmpty()) {
-      return undefined
+      return undefined;
     }
-    const result = this.items[this.lowestCount]
-    delete this.items[this.lowestCount]
-    this.lowestCount++
-    return result
+    const result = this.items[this.lowestCount];
+    delete this.items[this.lowestCount];
+    this.lowestCount++;
+    return result;
   }
 
   /**
@@ -41,9 +42,9 @@ export default class Queue<T> {
    */
   public peek(): T | undefined {
     if (this.isEmpty()) {
-      return undefined
+      return undefined;
     }
-    return this.items[this.lowestCount]
+    return this.items[this.lowestCount];
   }
 
   /**
@@ -51,7 +52,7 @@ export default class Queue<T> {
    * @returns
    */
   public isEmpty(): boolean {
-    return this.count - this.lowestCount === 0
+    return this.count - this.lowestCount === 0;
   }
 
   /**
@@ -59,37 +60,37 @@ export default class Queue<T> {
    * @returns
    */
   public size(): number {
-    return this.count - this.lowestCount
+    return this.count - this.lowestCount;
   }
 
   /**
    * 清空队列
    */
   public clear() {
-    this.count = 0
-    this.items = {}
-    this.lowestCount = 0
+    this.count = 0;
+    this.items = {};
+    this.lowestCount = 0;
   }
 
   public toString(): string {
     if (this.isEmpty()) {
-      return ''
+      return '';
     }
-    let objString = `${this.items[this.lowestCount]}`
+    let objString = `${this.items[this.lowestCount]}`;
     for (let i = this.lowestCount + 1; i < this.count; i++) {
-      objString = `${objString}, ${this.items[i]}`
+      objString = `${objString}, ${this.items[i]}`;
     }
-    return objString
+    return objString;
   }
 }
 
-const queue:Queue<string> = new Queue()
-queue.enqueue('one')
-queue.enqueue('two')
-queue.enqueue('three')
-console.log('isEmpty', queue.isEmpty())
-console.log('toString', queue.toString())
-console.log('peek', queue.peek())
-console.log('size', queue.size())
-console.log('dequeue', queue.dequeue())
-console.log('toString', queue.toString())
+const queue: Queue<string> = new Queue();
+queue.enqueue('one');
+queue.enqueue('two');
+queue.enqueue('three');
+console.log('isEmpty', queue.isEmpty());
+console.log('toString', queue.toString());
+console.log('peek', queue.peek());
+console.log('size', queue.size());
+console.log('dequeue', queue.dequeue());
+console.log('toString', queue.toString());

@@ -1,3 +1,5 @@
+import { IItems } from "../types"
+
 /**
  * 双端队列 deque double-ended queue
  */

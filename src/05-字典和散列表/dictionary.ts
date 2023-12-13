@@ -4,16 +4,16 @@
 // 字典和集合很相似，集合以[值，值]的形式存储元素，字 典则是以[键，值]的形式来存储元素。
 // 字典也称作映射、符号表或关联数组。
 
-import { defaultToString } from '../utils/util'
-import { ValuePair } from '../models/value-pair'
+import { defaultToString } from '../utils/util';
+import { ValuePair } from '../models/value-pair';
 
 /**
  * 字典
  */
 export default class Dictionary<K, V> {
-  private table: {[key: string]: ValuePair<K, V>}
+  private table: { [key: string]: ValuePair<K, V> };
   constructor(private toStrFm = defaultToString) {
-    this.table = {}
+    this.table = {};
   }
 
   /**
@@ -23,11 +23,11 @@ export default class Dictionary<K, V> {
    */
   public set(key: K, value: V): boolean {
     if (key !== undefined && value !== undefined) {
-      const tableKey = this.toStrFm(key)
-      this.table[tableKey] = new ValuePair(key, value)
-      return true
+      const tableKey = this.toStrFm(key);
+      this.table[tableKey] = new ValuePair(key, value);
+      return true;
     }
-    return false
+    return false;
   }
 
   /**
@@ -36,10 +36,10 @@ export default class Dictionary<K, V> {
    */
   public remove(key: K) {
     if (this.hasKey(key)) {
-      delete this.table[this.toStrFm(key)]
-      return true
+      delete this.table[this.toStrFm(key)];
+      return true;
     }
-    return false
+    return false;
   }
 
   /**
@@ -47,8 +47,8 @@ export default class Dictionary<K, V> {
    * @param key
    */
   public get(key: K): string | undefined {
-    const valuePair = this.table[this.toStrFm(key)]
-    return valuePair === undefined ? undefined : valuePair.toString()
+    const valuePair = this.table[this.toStrFm(key)];
+    return valuePair === undefined ? undefined : valuePair.toString();
   }
 
   /**
@@ -56,7 +56,7 @@ export default class Dictionary<K, V> {
    * @returns
    */
   public keyValues(): ValuePair<K, V>[] {
-    return Object.values(this.table)
+    return Object.values(this.table);
   }
 
   /**
@@ -64,7 +64,7 @@ export default class Dictionary<K, V> {
    * @returns
    */
   public keys(): K[] {
-    return this.keyValues().map(valuePair => valuePair.key)
+    return this.keyValues().map((valuePair) => valuePair.key);
   }
 
   /**
@@ -72,20 +72,18 @@ export default class Dictionary<K, V> {
    * @returns
    */
   public values(): V[] {
-    return this.keyValues().map(valuePair => valuePair.value)
+    return this.keyValues().map((valuePair) => valuePair.value);
   }
 
   /**
    * 迭代字典中的每个键值对
    * @param callbackFn 回到函数
    */
-  public forEach(callbackFn: Function) {
-    const valuePairs = this.keyValues()
+  public forEach(callbackFn: (key: K, value: V) => void): void {
+    const valuePairs = this.keyValues();
     for (let i = 0; i < valuePairs.length; i++) {
-      const result = callbackFn(valuePairs[i].key, valuePairs[i].value)
-      if (result === false) {
-        break
-      }
+      const { key, value } = valuePairs[i];
+      callbackFn(key, value);
     }
   }
 
@@ -94,7 +92,7 @@ export default class Dictionary<K, V> {
    * @returns
    */
   public size(): number {
-    return Object.keys(this.table).length
+    return Object.keys(this.table).length;
   }
 
   /**
@@ -102,14 +100,14 @@ export default class Dictionary<K, V> {
    * @returns
    */
   public isEmpty(): boolean {
-    return this.size() === 0
+    return this.size() === 0;
   }
 
   /**
    * 清空字典
    */
   public clear() {
-    this.table = {}
+    this.table = {};
   }
 
   /**
@@ -118,14 +116,14 @@ export default class Dictionary<K, V> {
    */
   public toString(): string {
     if (this.isEmpty()) {
-      return ''
+      return '';
     }
-    const valuePairs = this.keyValues()
-    let objString = `${valuePairs[0].toString()}`
+    const valuePairs = this.keyValues();
+    let objString = `${valuePairs[0].toString()}`;
     for (let i = 1; i < valuePairs.length; i++) {
-      objString = `${objString}, ${valuePairs[i].toString()}`
+      objString = `${objString}, ${valuePairs[i].toString()}`;
     }
-    return objString
+    return objString;
   }
 
   /**
@@ -134,7 +132,6 @@ export default class Dictionary<K, V> {
    * @returns
    */
   public hasKey(key: K): boolean {
-    return this.table[this.toStrFm(key)] !== undefined
+    return this.table[this.toStrFm(key)] !== undefined;
   }
-
 }

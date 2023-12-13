@@ -1,12 +1,13 @@
 import { defaultEquals } from '../utils/util'
 import LinkedList from './linked-list'
 import { DoublyNode } from '../models/linked-list-models'
+import { IEqualsFunction } from '../types'
 
 /**
  * 双向链表
  */
 export default class DoublyLinkedList<T> extends LinkedList<T> {
-  protected head: DoublyNode<T> | undefined
+  declare head: DoublyNode<T> | undefined
   protected tail: DoublyNode<T> | undefined // 链表最后一个元素的引用
   constructor(protected equalsFn: IEqualsFunction<T> = defaultEquals) {
     super(equalsFn)

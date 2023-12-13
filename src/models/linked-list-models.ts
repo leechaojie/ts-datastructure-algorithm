@@ -1,13 +1,15 @@
 // 链表助手类
 
-
 /**
  * 添加到链表中的元素
  * @param element 加入链表的元素
  * @param next 链表下一个元素的指针
  */
 export class Node<T> {
-  constructor(public element: T, public next?: Node<T>) {}
+  constructor(
+    public element: T,
+    public next?: Node<T>,
+  ) {}
 }
 
 /**
@@ -18,10 +20,10 @@ export class Node<T> {
  */
 export class DoublyNode<T> extends Node<T> {
   constructor(
-      public element: T,
-      public next?: DoublyNode<T>,
-      public prev?: DoublyNode<T>
+    public element: T,
+    public next?: DoublyNode<T>,
+    public prev?: DoublyNode<T>,
   ) {
-    super(element, next)
+    super(element, next);
   }
 }

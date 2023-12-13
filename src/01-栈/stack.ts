@@ -1,3 +1,5 @@
+import { IItems } from "../types"
+
 /**
  * 栈
  */

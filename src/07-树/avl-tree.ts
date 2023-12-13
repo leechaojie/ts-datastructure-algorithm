@@ -1,8 +1,8 @@
 // 自平衡树 Adelson-Velskii-Landi AVL
 
-import { Compare, ICompareFunction, defaultCompare } from "../utils/util"
-import { Node } from "../models/tree-models"
-import BinarySearchTree from "./binary-search-tree"
+// import { Compare, ICompareFunction, defaultCompare } from '../utils/util';
+import { Node } from '../models/tree-models';
+import BinarySearchTree from './binary-search-tree';
 
 // 平衡因子
 enum BalanceFactor {
@@ -10,14 +10,13 @@ enum BalanceFactor {
   SLIGHTLY_UNBALANCED_RIGHT = 2,
   BALANCED = 3,
   SLIGHTLY_UNBALANCED_LEFT = 4,
-  UNBALANCED_LEFT = 5
+  UNBALANCED_LEFT = 5,
 }
 
 /**
  * 自平衡树
  */
 export default class AVLTree<T> extends BinarySearchTree<T> {
-
   /**
    * 获取节点高度
    * @param node Node<T>
@@ -25,9 +24,12 @@ export default class AVLTree<T> extends BinarySearchTree<T> {
    */
   private getNodeHeight(node: Node<T> | null): number {
     if (node === null) {
-      return -1
+      return -1;
     }
-    return Math.max(this.getNodeHeight(node.left), this.getNodeHeight(node.right)) + 1
+    return (
+      Math.max(this.getNodeHeight(node.left), this.getNodeHeight(node.right)) +
+      1
+    );
   }
 
   /**
@@ -44,12 +46,12 @@ export default class AVLTree<T> extends BinarySearchTree<T> {
    * @returns
    */
   public rotationLL(node: Node<T>): Node<T> | null {
-    const tmp = node.left
+    const tmp = node.left;
     if (tmp) {
-      node.left = tmp.right
-      tmp.right = node
+      node.left = tmp.right;
+      tmp.right = node;
     }
-    return tmp
+    return tmp;
   }
 
   /**
@@ -66,12 +68,12 @@ export default class AVLTree<T> extends BinarySearchTree<T> {
    * @returns
    */
   public rotationRR(node: Node<T>): Node<T> | null {
-    const tmp = node.right
+    const tmp = node.right;
     if (tmp) {
-      node.right = tmp.left
-      tmp.left = node
+      node.right = tmp.left;
+      tmp.left = node;
     }
-    return tmp
+    return tmp;
   }
 
   /**
@@ -81,8 +83,8 @@ export default class AVLTree<T> extends BinarySearchTree<T> {
    * @returns
    */
   public rotationLR(node: Node<T>): Node<T> | null {
-    node.left = this.rotationRR((node.left) as Node<T>)
-    return this.rotationLL(node)
+    node.left = this.rotationRR(node.left as Node<T>);
+    return this.rotationLL(node);
   }
 
   /**
@@ -92,8 +94,8 @@ export default class AVLTree<T> extends BinarySearchTree<T> {
    * @returns
    */
   public rotationRL(node: Node<T>): Node<T> | null {
-    node.right = this.rotationLL((node.right) as Node<T>)
-    return this.rotationRR(node)
+    node.right = this.rotationLL(node.right as Node<T>);
+    return this.rotationRR(node);
   }
 
   /**
@@ -102,19 +104,19 @@ export default class AVLTree<T> extends BinarySearchTree<T> {
    * @returns
    */
   public getBalanceFactor(node: Node<T>) {
-    const heightDifference = this.getNodeHeight(node.left) - this.getNodeHeight(node.right)
+    const heightDifference =
+      this.getNodeHeight(node.left) - this.getNodeHeight(node.right);
     switch (heightDifference) {
       case -2:
-        return BalanceFactor.UNBALANCED_RIGHT
+        return BalanceFactor.UNBALANCED_RIGHT;
       case -1:
-        return BalanceFactor.SLIGHTLY_UNBALANCED_RIGHT
+        return BalanceFactor.SLIGHTLY_UNBALANCED_RIGHT;
       case 1:
-        return BalanceFactor.SLIGHTLY_UNBALANCED_LEFT
+        return BalanceFactor.SLIGHTLY_UNBALANCED_LEFT;
       case 2:
-        return BalanceFactor.UNBALANCED_LEFT
+        return BalanceFactor.UNBALANCED_LEFT;
       default:
-        return BalanceFactor.BALANCED
+        return BalanceFactor.BALANCED;
     }
   }
-
 }

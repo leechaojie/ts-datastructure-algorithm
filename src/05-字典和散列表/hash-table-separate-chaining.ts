@@ -3,17 +3,17 @@
 // 但是在 HashTable 实例之外还需要额外的存储空间。
 // ASCII https://www.asciitable.com
 
-import { defaultToString } from "../utils/util"
-import { ValuePair } from "../models/value-pair"
-import LinkedList from "../03-链表/linked-list"
+import { defaultToString } from '../utils/util';
+import { ValuePair } from '../models/value-pair';
+import LinkedList from '../03-链表/linked-list';
 
 /**
  * 散列表 分离链接
  */
 export default class HashTableSeparateChaining<K, V> {
-  private table: {[key: number]: LinkedList<ValuePair<K, V>>}
+  private table: { [key: number]: LinkedList<ValuePair<K, V>> };
   constructor(private toStrFn = defaultToString) {
-    this.table = {}
+    this.table = {};
   }
 
   /**
@@ -24,14 +24,14 @@ export default class HashTableSeparateChaining<K, V> {
    */
   public put(key: K, value: V): boolean {
     if (key !== undefined && value !== undefined) {
-      const position = this.hashCode(key)
+      const position = this.hashCode(key);
       if (this.table[position] === undefined) {
-        this.table[position] = new LinkedList()
+        this.table[position] = new LinkedList();
       }
-      this.table[position].push(new ValuePair(key, value))
-      return true
+      this.table[position].push(new ValuePair(key, value));
+      return true;
     }
-    return false
+    return false;
   }
 
   /**
@@ -40,18 +40,18 @@ export default class HashTableSeparateChaining<K, V> {
    * @returns
    */
   public get(key: K): V | undefined {
-    const position = this.hashCode(key)
-    const linkedList = this.table[position]
+    const position = this.hashCode(key);
+    const linkedList = this.table[position];
     if (linkedList !== undefined && !linkedList.isEmpty()) {
-      let current = linkedList.getHead()
+      let current = linkedList.getHead();
       while (current !== undefined) {
         if (current.element.key === key) {
-          return current.element.value
+          return current.element.value;
         }
-        current = current.next
+        current = current.next;
       }
     }
-    return undefined
+    return undefined;
   }
 
   /**
@@ -60,24 +60,23 @@ export default class HashTableSeparateChaining<K, V> {
    * @returns
    */
   public remove(key: K): boolean {
-    const position = this.hashCode(key)
-    const linkedList = this.table[position]
+    const position = this.hashCode(key);
+    const linkedList = this.table[position];
     if (linkedList !== undefined && !linkedList.isEmpty()) {
-      let current = linkedList.getHead()
+      let current = linkedList.getHead();
       while (current !== undefined) {
         if (current.element.key === key) {
-          linkedList.remove(current.element)
+          linkedList.remove(current.element);
           if (linkedList.isEmpty()) {
-            delete this.table[position]
+            delete this.table[position];
           }
-          return true
+          return true;
         }
-        current = current.next
+        current = current.next;
       }
     }
-    return false
+    return false;
   }
-
 
   /**
    * 获取 key 的 hashCode
@@ -85,7 +84,7 @@ export default class HashTableSeparateChaining<K, V> {
    * @returns ASCII
    */
   public hashCode(key: K): number {
-    return this.loseloseHashCode(key)
+    return this.loseloseHashCode(key);
   }
 
   /**
@@ -96,14 +95,13 @@ export default class HashTableSeparateChaining<K, V> {
    */
   public loseloseHashCode(key: K): number {
     if (typeof key === 'number') {
-      return key
+      return key;
     }
-    const tableKey = this.toStrFn(key)
-    let hash = 0
+    const tableKey = this.toStrFn(key);
+    let hash = 0;
     for (let i = 0; i < tableKey.length; i++) {
-      hash += tableKey.charCodeAt(i)
+      hash += tableKey.charCodeAt(i);
     }
-    return hash
+    return hash;
   }
-
 }

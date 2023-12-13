@@ -1,15 +1,15 @@
 // 二叉搜索树 BinarySearchTree BST
 
-import { Compare, ICompareFunction, defaultCompare } from "../utils/util"
-import { Node } from "../models/tree-models"
+import { Compare, ICompareFunction, defaultCompare } from '../utils/util';
+import { Node } from '../models/tree-models';
 
 /**
  * 二叉搜索树
  */
 export default class BinarySearchTree<T> {
-  protected root: Node<T> | null
+  protected root: Node<T> | null;
   constructor() {
-    this.root = null
+    this.root = null;
   }
 
   /**
@@ -20,7 +20,7 @@ export default class BinarySearchTree<T> {
    * @return BIGGER_THAN a > b
    * @return EQUALS a = b
    */
-  protected compareFn: ICompareFunction<T> = defaultCompare
+  protected compareFn: ICompareFunction<T> = defaultCompare;
 
   /**
    * 向二叉搜索树中插入一个键
@@ -28,9 +28,9 @@ export default class BinarySearchTree<T> {
    */
   public insert(key: T) {
     if (this.root === null) {
-      this.root = new Node(key)
+      this.root = new Node(key);
     } else {
-      this.insertNode(this.root, key)
+      this.insertNode(this.root, key);
     }
   }
 
@@ -42,16 +42,17 @@ export default class BinarySearchTree<T> {
   private insertNode(node: Node<T>, key: T) {
     // 新节点是否小于跟节点
     if (this.compareFn(key, node.key) === Compare.LESS_THAN) {
-      if (node.left === null) { // 基线条件
-        node.left = new Node(key)
+      if (node.left === null) {
+        // 基线条件
+        node.left = new Node(key);
       } else {
-        this.insertNode(node.left, key) // 递归
+        this.insertNode(node.left, key); // 递归
       }
     } else {
       if (node.right === null) {
-        node.right = new Node(key)
+        node.right = new Node(key);
       } else {
-        this.insertNode(node.right, key)
+        this.insertNode(node.right, key);
       }
     }
   }
@@ -63,15 +64,15 @@ export default class BinarySearchTree<T> {
    * 中序遍历的一种应用就是对树进行排序操作
    * @param callback
    */
-  public inOrderTraverse(callback: Function) {
-    this.inOrderTraverseNode(this.root, callback)
+  public inOrderTraverse(callback: (key: T) => void) {
+    this.inOrderTraverseNode(this.root, callback);
   }
 
-  private inOrderTraverseNode(node: Node<T> | null, callback: Function) {
-    if (node !== null) {
-      this.inOrderTraverseNode(node.left, callback)
-      callback(node.key)
-      this.inOrderTraverseNode(node.right, callback)
+  private inOrderTraverseNode(node: Node<T> | null, callback: (key: T) => void) {
+    if (node) {
+      this.inOrderTraverseNode(node.left, callback);
+      callback(node.key);
+      this.inOrderTraverseNode(node.right, callback);
     }
   }
 
@@ -81,18 +82,17 @@ export default class BinarySearchTree<T> {
    * 先序遍历的一种应用是打印一个结构化的文档。
    * @param callback
    */
-  public preOrderTraverse(callback: Function) {
-    this.preOrderTraverseNode(this.root, callback)
+  public preOrderTraverse(callback: (key: T) => void) {
+    this.preOrderTraverseNode(this.root, callback);
   }
 
-  private preOrderTraverseNode(node: Node<T> | null, callback: Function) {
+  private preOrderTraverseNode(node: Node<T> | null, callback: (key: T) => void) {
     if (node !== null) {
-      callback(node.key)
-      this.preOrderTraverseNode(node.left, callback)
-      this.preOrderTraverseNode(node.right, callback)
+      callback(node.key);
+      this.preOrderTraverseNode(node.left, callback);
+      this.preOrderTraverseNode(node.right, callback);
     }
   }
-
 
   /**
    * 后序遍历
@@ -100,15 +100,15 @@ export default class BinarySearchTree<T> {
    * 后序遍历的一种应用是计算一个目录及其子目录中所有文件所占空间的大小。
    * @param callback
    */
-  public postOrderTraverse(callback: Function) {
-    this.postOrderTraverseNode(this.root, callback)
+  public postOrderTraverse(callback: (key: T) => void) {
+    this.postOrderTraverseNode(this.root, callback);
   }
 
-  private postOrderTraverseNode(node: Node<T> | null, callback: Function) {
+  private postOrderTraverseNode(node: Node<T> | null, callback: (key: T) => void) {
     if (node !== null) {
-      this.postOrderTraverseNode(node.left, callback)
-      this.postOrderTraverseNode(node.right, callback)
-      callback(node.key)
+      this.postOrderTraverseNode(node.left, callback);
+      this.postOrderTraverseNode(node.right, callback);
+      callback(node.key);
     }
   }
 
@@ -117,7 +117,7 @@ export default class BinarySearchTree<T> {
    * @returns
    */
   public min() {
-    return this.minNode(this.root)
+    return this.minNode(this.root);
   }
 
   /**
@@ -126,11 +126,11 @@ export default class BinarySearchTree<T> {
    * @returns
    */
   protected minNode(node: Node<T> | null): Node<T> | null {
-    let current = node
+    let current = node;
     while (current != null && current.left != null) {
-      current = current.left
+      current = current.left;
     }
-    return current
+    return current;
   }
 
   /**
@@ -138,20 +138,20 @@ export default class BinarySearchTree<T> {
    * @returns
    */
   public max() {
-    return this.maxNode(this.root)
+    return this.maxNode(this.root);
   }
 
   /**
-     * 迭代找出最大值
-     * @param node
-     * @returns
-     */
+   * 迭代找出最大值
+   * @param node
+   * @returns
+   */
   protected maxNode(node: Node<T> | null): Node<T> | null {
-    let current = node
+    let current = node;
     while (current !== null && current.right !== null) {
-      current = current.right
+      current = current.right;
     }
-    return current
+    return current;
   }
 
   /**
@@ -160,7 +160,7 @@ export default class BinarySearchTree<T> {
    * @returns true 存在 false 不存在
    */
   public search(key: T) {
-    return this.searchNode(this.root, key)
+    return this.searchNode(this.root, key);
   }
 
   /**
@@ -171,15 +171,15 @@ export default class BinarySearchTree<T> {
    */
   private searchNode(node: Node<T> | null, key: T): boolean {
     if (node === null) {
-      return false
+      return false;
     }
     // 比较节点大小
     if (this.compareFn(key, node.key) === Compare.LESS_THAN) {
-      return this.searchNode(node.left, key)
+      return this.searchNode(node.left, key);
     } else if (this.compareFn(key, node.key) === Compare.BIGGER_THAN) {
-      return this.searchNode(node.right, key)
+      return this.searchNode(node.right, key);
     } else {
-      return true
+      return true;
     }
   }
 
@@ -188,41 +188,41 @@ export default class BinarySearchTree<T> {
    * @param key 需要一处的值
    */
   public remove(key: T) {
-    this.root = this.removeNode(this.root, key)
+    this.root = this.removeNode(this.root, key);
   }
 
   protected removeNode(node: Node<T> | null, key: T): null | Node<T> {
     if (node === null) {
-      return null
+      return null;
     }
     if (this.compareFn(key, node.key) === Compare.LESS_THAN) {
-      node.left = this.removeNode(node.left, key)
-      return node
+      node.left = this.removeNode(node.left, key);
+      return node;
     } else if (this.compareFn(key, node.key) === Compare.BIGGER_THAN) {
-      node.right = this.removeNode(node.right, key)
-      return node
+      node.right = this.removeNode(node.right, key);
+      return node;
     } else {
       // 1 第一种情况: 该节点是一个没有左侧或右侧子节点的叶节点
       if (node.left === null && node.right === null) {
-        node = null
-        return node
+        node = null;
+        return node;
       }
 
       // 2 移除有一个左侧或右侧子节点的节点
       if (node.left === null) {
-        node = node.right
-        return node
+        node = node.right;
+        return node;
       } else if (node.right === null) {
-        node = node.left
-        return node
+        node = node.left;
+        return node;
       }
 
       // 3 移除有两个子节点的节点
       // aux 右边子树中最小的节点
       const aux = this.minNode(node.right);
-      (node as Node<T>).key = (aux?.key as T)
-      node.right = this.removeNode(node.right, aux?.key as T)
-      return node
+      (node as Node<T>).key = aux?.key as T;
+      node.right = this.removeNode(node.right, aux?.key as T);
+      return node;
     }
   }
 }

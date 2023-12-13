@@ -4,16 +4,16 @@
 // 如果使用散列函数，就知道值的具体位置，因此能够快速检索到该值。
 // 散列函数的作用是给定一个键值，然后返回值在表中的地址。
 
-import { defaultToString } from "../utils/util"
-import { ValuePair } from "../models/value-pair"
+import { defaultToString } from '../utils/util';
+import { ValuePair } from '../models/value-pair';
 
 /**
  * 散列表
  */
 export default class HashTable<K, V> {
-  private table: {[key: string]: ValuePair<K, V>}
+  private table: { [key: string]: ValuePair<K, V> };
   constructor(private toStrFn = defaultToString) {
-    this.table = {}
+    this.table = {};
   }
 
   /**
@@ -24,19 +24,17 @@ export default class HashTable<K, V> {
    */
   public loseloseHashCode(key: K): number {
     if (typeof key === 'number') {
-      return key
+      return key;
     }
-    const tableKey = this.toStrFn(key)
-    let hash = 0
+    const tableKey = this.toStrFn(key);
+    let hash = 0;
     for (let i = 0; i < tableKey.length; i++) {
-      hash += tableKey.charCodeAt(i) // charCodeAt https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt
+      hash += tableKey.charCodeAt(i); // charCodeAt https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt
     }
 
     // 为了得到比较小的数值，这里使用 hash 值和一个任意数做除法的余数(%) —— 这可以规避操作数超过数值变量最大表示范围的风险。
-    return hash % 37
-
+    return hash % 37;
   }
-
 
   /**
    * 最受社区推崇的散列函数
@@ -48,22 +46,22 @@ export default class HashTable<K, V> {
    */
   public djb2HashCode(key: K): number {
     if (typeof key === 'number') {
-      return key
+      return key;
     }
-    const tableKey = this.toStrFn(key) // {1}
-    let hash = 5381 // {2}
-    for (let i = 0; i < tableKey.length; i++) { // {3}
-      hash = (hash * 33) + tableKey.charCodeAt(i) // {4}
+    const tableKey = this.toStrFn(key); // {1}
+    let hash = 5381; // {2}
+    for (let i = 0; i < tableKey.length; i++) {
+      // {3}
+      hash = hash * 33 + tableKey.charCodeAt(i); // {4}
     }
-    return hash % 1013 // {5}
+    return hash % 1013; // {5}
   }
-
 
   /**
    * 获取 key 的 hashCode
    */
   public hashCode(key: K): number {
-    return this.djb2HashCode(key)
+    return this.djb2HashCode(key);
   }
 
   /**
@@ -71,54 +69,54 @@ export default class HashTable<K, V> {
    */
   public put(key: K, value: V): boolean {
     if (key !== undefined && value !== undefined) {
-      const position = this.hashCode(key)
+      const position = this.hashCode(key);
       // 传入的 position 相同的话，会被覆盖
-      this.table[position] = new ValuePair(key, value)
-      return true
+      this.table[position] = new ValuePair(key, value);
+      return true;
     }
-    return false
+    return false;
   }
 
   /**
    * 从散列表中获取一个值
    */
   public get(key: K): V | undefined {
-    const valuePair = this.table[this.hashCode(key)]
-    return valuePair === undefined ? undefined : valuePair.value
+    const valuePair = this.table[this.hashCode(key)];
+    return valuePair === undefined ? undefined : valuePair.value;
   }
 
   /**
    * 从散列表中移除一个值
    */
   public remove(key: K): boolean {
-    const hash = this.hashCode(key)
-    const valuePair = this.table[hash]
+    const hash = this.hashCode(key);
+    const valuePair = this.table[hash];
     if (valuePair !== undefined) {
-      delete this.table[hash]
-      return true
+      delete this.table[hash];
+      return true;
     }
-    return false
+    return false;
   }
 
   /**
    * 检查散列表是否为空
    */
   public isEmpty(): boolean {
-    return this.size() === 0
+    return this.size() === 0;
   }
 
   /**
    * 返回散列表元素个数
    */
   public size(): number {
-    return Object.keys(this.table).length
+    return Object.keys(this.table).length;
   }
 
   /**
    * 清空散列表
    */
   public clear() {
-    this.table = {}
+    this.table = {};
   }
 
   /**
@@ -126,14 +124,15 @@ export default class HashTable<K, V> {
    */
   public toString(): string {
     if (this.isEmpty()) {
-      return ''
+      return '';
     }
-    const keys = Object.keys(this.table)
-    let objString = `{${keys[0]} => ${this.table[keys[0]].toString()}}`
+    const keys = Object.keys(this.table);
+    let objString = `{${keys[0]} => ${this.table[keys[0]].toString()}}`;
     for (let i = 1; i < keys.length; i++) {
-      objString = `${objString}, {${keys[i]} => ${this.table[keys[i]].toString()}}`
+      objString = `${objString}, {${keys[i]} => ${this.table[
+        keys[i]
+      ].toString()}}`;
     }
-    return objString
+    return objString;
   }
-
 }
